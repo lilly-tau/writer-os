@@ -1,0 +1,3 @@
+Doesnt actually do anything but read a TAR formatted partition and execute the
+BOOT file therein, but it *does* do that (have to check if it works on real
+hardware tmr).
