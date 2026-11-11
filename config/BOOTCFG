@@ -1,0 +1,4 @@
+# This is a comment
+
+KPART=2
+KPATH=KERNEL.BIN

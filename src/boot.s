@@ -132,6 +132,27 @@ reset:
 	int $0x13
 	jc error
 
+	xor %dh, %dh
+	# Check the A20 line and OR its availability into (DH & 1)
+	mov $0xFFFF, %ax
+	mov %ax, %es
+	movb $0x00, %es:0x800
+	movb $0xFF, 0x800
+
+	xor %ax, %ax
+	cmpb $0xFF, %es:0x800	# If ds:800h altered es:800h they are the same
+				# address and A20 is enabled.
+	jne 0f
+	dec %ax
+0:
+	and $0x01, %al
+	or %al, %dh
+	
+
+	mov drive, %dl
+	mov mbr.address, %si
+	mov mbr.segment, %ax
+	mov %ax, %ds
 	ljmp $0x1000, $0x0000
 error:
 	mov $0x0E21, %ax
